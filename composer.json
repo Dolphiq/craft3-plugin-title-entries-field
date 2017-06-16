@@ -1,5 +1,5 @@
 {
-    "name": "dolphiq/linktofield",
+    "name": "dolphiq/linkfield",
     "description": "Craft plugin that provides a new field type that works like an Entries field type but offers users an easy way to set a different title for the relation than the related page title.",
     "type": "craft-plugin",
     "version": "1.0.0",
@@ -29,16 +29,16 @@
         }
     },
     "extra": {
-        "name": "Link To Field",
-        "handle": "linktofield",
+        "name": "Labeled Entries Field",
+        "handle": "linkfield",
         "schemaVersion": "1.0.0",
         "developer": "Dolphiq",
         "developerUrl": "https://dolphiq.nl/",
         "description": "Craft plugin that provides a new field type that works like an Entries field type but offers users an easy way to set a different title for the relation than the related page title.",
         "hasCpSettings": false,
         "hasCpSection": false,
-        "documentationUrl": "https://github.com/Dolphiq/craft3-plugin-link-to-field/blob/master/README.md",
-        "changelogUrl": "https://raw.githubusercontent.com/Dolphiq/craft3-plugin-link-to-field/master/CHANGELOG.md",
-        "class": "dolphiq\\linkfield\\LinkFieldPlugin"
+        "documentationUrl": "https://github.com/Dolphiq/craft3-plugin-labeled-entries-field/blob/master/README.md",
+        "changelogUrl": "https://raw.githubusercontent.com/Dolphiq/craft3-plugin-labeled-entries-field/master/CHANGELOG.md",
+        "class": "dolphiq\\linkfield\\LabeledEntriesFieldPlugin"
     }
 }

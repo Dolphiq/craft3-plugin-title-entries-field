@@ -20,7 +20,7 @@ use dolphiq\linkfield\elements\LinkFieldEntry;
 use craft\base\FieldInterface;
 
 
-class LinkToField extends BaseRelationField implements FieldInterface
+class LabeledEntriesField extends BaseRelationField implements FieldInterface
 {
 
     /**
@@ -33,7 +33,7 @@ class LinkToField extends BaseRelationField implements FieldInterface
      */
     public static function displayName(): string
     {
-        return Craft::t('linkfield', 'Link To Field');
+        return Craft::t('linkfield', 'Labeled Entries Field');
     }
 
 

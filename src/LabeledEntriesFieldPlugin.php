@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Craft linkfield plugin
+ * Craft Labeled Entries Field type plugin
  *
  * @author    dolphiq
  * @copyright Copyright (c) 2017 dolphiq
