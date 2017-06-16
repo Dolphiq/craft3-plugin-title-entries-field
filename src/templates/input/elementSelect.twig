@@ -1,0 +1,119 @@
+{% if name is defined and name %}
+    <input type="hidden" name="{{ name }}" value="">
+{% endif -%}
+
+{% set elements = (elements is defined and elements ? elements : []) -%}
+{% set jsClass = (jsClass is defined and jsClass ? jsClass : 'Craft.LinkFieldSelectInput') -%}
+{% set sources = (sources is defined and sources ? sources : null) -%}
+{% set criteria = (criteria is defined and criteria ? criteria : null) -%}
+{% set sourceElementId = (sourceElementId is defined and sourceElementId ? sourceElementId : null) -%}
+{% set storageKey = (storageKey is defined and storageKey ? storageKey : null) -%}
+{% set viewMode = (viewMode is defined ? viewMode : 'list') %}
+
+<div id="{{ id }}" class="elementselect">
+    <div class="elements">
+        {% for element in elements %}
+            {% include "linkfield/input/linkFieldElement" with {
+                context: 'field',
+                size: (viewMode == 'large' ? 'large' : 'small')
+            } %}
+        {% endfor %}
+    </div>
+
+    <div class="btn add icon dashed">{{ selectionLabel is defined ? selectionLabel : "Choose"|t('app') }}</div>
+</div>
+
+{% set jsSettings = {
+    id: id|namespaceInputId,
+    name: name|namespaceInputName,
+    elementType: elementType,
+    sources: sources,
+    criteria: criteria,
+    sourceElementId: sourceElementId,
+    viewMode: viewMode,
+    limit: limit,
+    modalStorageKey: storageKey
+} %}
+
+{% js %}
+
+Craft.LinkFieldSelectInput = Craft.BaseElementSelectInput.extend(
+{
+
+        createNewElement: function(elementInfo) {
+            var $element = elementInfo.$element.clone();
+            Craft.setElementSize($element, (this.settings.viewMode == 'large' ? 'large' : 'small'));
+            $element.addClass('removable');
+
+            var labelFieldId = this.settings.id + '_LinkFieldLabel_' + elementInfo.id;
+            var labelFieldName = this.settings.name.replace(']', '_LinkFieldLabel_' + elementInfo.id + ']');
+
+            $element.prepend('<input type="hidden" name="' + this.settings.name + '[]" value="' + elementInfo.id + '">' +
+                '<input type="hidden" id="' + labelFieldId +'" name="' + labelFieldName + '" value="">' +
+                '<a class="delete icon" title="' + Craft.t('app', 'Remove') + '"></a>');
+            $element.find('.label').append('<span class="linkFieldLabel" style="padding-left: 15px; font-size:0.8em; font-style:italic">&nbsp;</span>' +
+            '<a class="edit icon rename" title="' + Craft.t('app', 'Rename') + '"></a>'
+            );
+           
+            return $element;
+        },
+        addElements: function($elements) {
+            if (this.settings.selectable) {
+                this.elementSelect.addItems($elements);
+            }
+
+            if (this.settings.sortable) {
+                this.elementSort.addItems($elements);
+            }
+
+            if (this.settings.editable) {
+                this._handleShowElementEditor = $.proxy(function(ev) {
+                    var $element = $(ev.currentTarget);
+                    if (Garnish.hasAttr($element, 'data-editable') && !$element.hasClass('disabled') && !$element.hasClass('loading')) {
+                        this.elementEditor = this.createElementEditor($element);
+                    }
+                }, this);
+
+                this.addListener($elements, 'dblclick', this._handleShowElementEditor);
+
+                if ($.isTouchCapable()) {
+                    this.addListener($elements, 'taphold', this._handleShowElementEditor);
+                }
+            }
+
+            $elements.find('.delete').on('click', $.proxy(function(ev) {
+                this.removeElement($(ev.currentTarget).closest('.element'));
+            }, this));
+            $elements.find('.rename').on('click', $.proxy(function(ev) {
+                this.renameLink($(ev.currentTarget).closest('.element'));
+            }, this));
+            this.$elements = this.$elements.add($elements);
+            this.updateAddElementsBtn();
+        },
+        renameLink: function($element) {
+            var oldName = $element.data('label');
+
+            var idField = $element.find('input');
+            var elementId = 0;
+            idField.each(function(){
+              elementId = idField.val();
+              return;
+            });
+
+            var labelField = $element.find('#' + this.settings.id + '_LinkFieldLabel_' + elementId + '');
+            if(labelField.length != 0) {
+              oldName = labelField.val();
+            }
+            var newName = prompt(Craft.t('app', 'Rename'), oldName);
+            if (newName !== null) {
+              $element.find('.linkFieldLabel').html(newName);
+              if(labelField.length != 0) {
+                labelField.val(newName);
+              }
+            }
+        }
+}
+);
+
+    new {{ jsClass }}({{ jsSettings|json_encode|raw }});
+{% endjs %}
