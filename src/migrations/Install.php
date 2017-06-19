@@ -7,7 +7,7 @@
  * @link      https://dolphiq.nl/
  */
 
-namespace dolphiq\linkfield\migrations;
+namespace dolphiq\titleentriesfield\migrations;
 
 use Craft;
 use craft\config\DbConfig;
@@ -23,8 +23,8 @@ class Install extends Migration
 {
     public function safeUp()
     {
-        if (!$this->db->columnExists('{{%relations}}', 'linkFieldLabel')) {
-            $this->addColumn('{{%relations}}', 'linkFieldLabel', 'string');
+        if (!$this->db->columnExists('{{%relations}}', 'linkTitle')) {
+            $this->addColumn('{{%relations}}', 'linkTitle', 'string');
         }
 
 
@@ -33,8 +33,8 @@ class Install extends Migration
 
     public function safeDown()
     {
-        if ($this->db->columnExists('{{%relations}}', 'linkFieldLabel')) {
-          $this->dropColumn('{{%relations}}', 'linkFieldLabel');
+        if ($this->db->columnExists('{{%relations}}', 'linkTitle')) {
+          $this->dropColumn('{{%relations}}', 'linkTitle');
 
         }
         return true;

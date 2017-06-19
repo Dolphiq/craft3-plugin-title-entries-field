@@ -7,7 +7,7 @@
  * @link      https://dolphiq.nl/
  */
 
-namespace dolphiq\linkfield\elements;
+namespace dolphiq\titleentriesfield\elements;
 
 use Craft;
 use craft\fields\BaseRelationField;
@@ -17,13 +17,13 @@ use craft\elements\Entry;
 use craft\base\Field;
 
 
-class LinkFieldEntry extends Entry {
+class TitleEntriesFieldEntry extends Entry {
 
-  public $linkFieldLabel;
+  public $linkTitle;
 
   public function getLinkFieldLabel () {
     // var_dump($this);
-    return $this->linkFieldLabel;
+    return $this->linkTitle;
   }
 
 }

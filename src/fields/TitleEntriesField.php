@@ -8,7 +8,7 @@
  * @link      https://dolphiq.nl/
  */
 
-namespace dolphiq\linkfield\fields;
+namespace dolphiq\titleentriesfield\fields;
 
 use Craft;
 use craft\fields\BaseRelationField;
@@ -16,11 +16,11 @@ use craft\base\ElementInterface;
 use craft\elements\db\ElementQueryInterface;
 use craft\elements\Entry;
 use craft\base\Field;
-use dolphiq\linkfield\elements\LinkFieldEntry;
+use dolphiq\titleentriesfield\elements\TitleEntriesFieldEntry;
 use craft\base\FieldInterface;
 
 
-class LabeledEntriesField extends BaseRelationField implements FieldInterface
+class TitleEntriesField extends BaseRelationField implements FieldInterface
 {
 
     /**
@@ -33,7 +33,7 @@ class LabeledEntriesField extends BaseRelationField implements FieldInterface
      */
     public static function displayName(): string
     {
-        return Craft::t('linkfield', 'Labeled Entries Field');
+        return Craft::t('linkfield', 'Title Entries Field');
     }
 
 
@@ -42,7 +42,7 @@ class LabeledEntriesField extends BaseRelationField implements FieldInterface
      */
     protected static function elementType(): string
     {
-        return LinkFieldEntry::class;
+        return TitleEntriesFieldEntry::class;
     }
 
     /**
@@ -99,7 +99,7 @@ class LabeledEntriesField extends BaseRelationField implements FieldInterface
                 ]
             );
 
-            $query->addSelect('relations.linkFieldLabel');
+            $query->addSelect('relations.linkTitle');
             if ($this->sortable) {
                 $query->orderBy(['relations.sortOrder' => SORT_ASC]);
             }
@@ -197,7 +197,7 @@ class LabeledEntriesField extends BaseRelationField implements FieldInterface
                     'sourceId',
                     'sourceSiteId',
                     'targetId',
-                    'linkFieldLabel',
+                    'linkTitle',
                     'sortOrder'
                 ];
 

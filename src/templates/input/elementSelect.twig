@@ -3,7 +3,7 @@
 {% endif -%}
 
 {% set elements = (elements is defined and elements ? elements : []) -%}
-{% set jsClass = (jsClass is defined and jsClass ? jsClass : 'Craft.LinkFieldSelectInput') -%}
+{% set jsClass = (jsClass is defined and jsClass ? jsClass : 'Craft.TitleElementFieldSelectInput') -%}
 {% set sources = (sources is defined and sources ? sources : null) -%}
 {% set criteria = (criteria is defined and criteria ? criteria : null) -%}
 {% set sourceElementId = (sourceElementId is defined and sourceElementId ? sourceElementId : null) -%}
@@ -13,7 +13,7 @@
 <div id="{{ id }}" class="elementselect">
     <div class="elements">
         {% for element in elements %}
-            {% include "linkfield/input/linkFieldElement" with {
+            {% include "linkfield/input/titleElrementsFieldElement" with {
                 context: 'field',
                 size: (viewMode == 'large' ? 'large' : 'small')
             } %}
@@ -37,7 +37,7 @@
 
 {% js %}
 
-Craft.LinkFieldSelectInput = Craft.BaseElementSelectInput.extend(
+Craft.TitleElementFieldSelectInput = Craft.BaseElementSelectInput.extend(
 {
 
         createNewElement: function(elementInfo) {
@@ -99,9 +99,12 @@ Craft.LinkFieldSelectInput = Craft.BaseElementSelectInput.extend(
               elementId = idField.val();
               return;
             });
+            
+
 
             var labelField = $element.find('#' + this.settings.id + '_LinkFieldLabel_' + elementId + '');
-            if(labelField.length != 0) {
+            console.log(idField.val(), labelField);
+            if(labelField.length != 0 && labelField.val()!='') {
               oldName = labelField.val();
             }
             var newName = prompt(Craft.t('app', 'Rename'), oldName);

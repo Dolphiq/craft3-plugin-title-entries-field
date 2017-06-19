@@ -1,24 +1,23 @@
 <?php
 
 /**
- * Craft Labeled Entries Field type plugin
+ * Craft Title Entries Field type plugin
  *
  * @author    dolphiq
  * @copyright Copyright (c) 2017 dolphiq
  * @link      https://dolphiq.nl/
  */
 
-namespace dolphiq\linkfield;
+namespace dolphiq\titleentriesfield;
 
 use Craft;
 use craft\base\Plugin;
 use craft\services\Fields;
 use craft\events\RegisterComponentTypesEvent;
 use yii\base\Event;
-use dolphiq\linkfield\fields\LinkToField;
+use dolphiq\titleentriesfield\fields\TitleEntriesField;
 use craft\helpers\Html as HtmlHelper;
 use craft\helpers\ElementHelper;
-// use dolphiq\linkfield\controllers\linkfieldController;
 
 
 use craft\base\Object;
@@ -26,7 +25,7 @@ use craft\base\Object;
 /**
  * LinkFieldPlugin class.
  */
-class LinkFieldPlugin extends \craft\base\Plugin
+class TitleEntriesFieldPlugin extends \craft\base\Plugin
 {
     public static $plugin;
 
@@ -50,7 +49,7 @@ class LinkFieldPlugin extends \craft\base\Plugin
 
         parent::init();
 
-        Craft::$app->getView()->hook('cp.elements.linkFieldElement', function (&$context) {
+        Craft::$app->getView()->hook('cp.elements.titleElementsFieldElement', function (&$context) {
             if (! isset($context['element'])) {
                 return null;
             }
@@ -132,10 +131,10 @@ class LinkFieldPlugin extends \craft\base\Plugin
             Fields::className(),
             Fields::EVENT_REGISTER_FIELD_TYPES,
             function (RegisterComponentTypesEvent $event) {
-                $event->types[] = LinkToField::class;
+                $event->types[] = TitleEntriesField::class;
             }
         );
 
-        Craft::info('dolphiq/linkfield plugin loaded', __METHOD__);
+        Craft::info('dolphiq/titleentriesfield plugin loaded', __METHOD__);
     }
 }
