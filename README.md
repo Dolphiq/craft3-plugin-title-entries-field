@@ -8,7 +8,7 @@ This is particularly useful if you are linking to other content but want to use 
 
 To install the Title Entries Field type, follow these steps:
 
-1. Install with Composer via `composer require dolphiq/linkfield` from your project folder
+1. Install with Composer via `composer require dolphiq/titleentriesfield` from your project folder
 2. Install plugin in the Craft Control Panel under Settings > Plugins
 3. The `Title Entries Field` type will be available when adding a new field - Settings > Fields > Add new field
 
