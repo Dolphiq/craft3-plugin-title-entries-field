@@ -45,12 +45,11 @@ Craft.TitleElementFieldSelectInput = Craft.BaseElementSelectInput.extend(
             Craft.setElementSize($element, (this.settings.viewMode == 'large' ? 'large' : 'small'));
             $element.addClass('removable');
 
-            var labelFieldId = this.settings.id + '_LinkFieldLabel_' + elementInfo.id;
-            var labelFieldName = this.settings.name.replace(']', '_LinkFieldLabel_' + elementInfo.id + ']');
+            var value = JSON.stringify({id: elementInfo.id, linkFieldLabel: null});
+  
+            $element.prepend('<input type="hidden" name="' + this.settings.name + '[]" value="' + value.replace(/"/g, '&quot;') + '">' +
 
-            $element.prepend('<input type="hidden" name="' + this.settings.name + '[]" value="' + elementInfo.id + '">' +
-                '<input type="hidden" id="' + labelFieldId +'" name="' + labelFieldName + '" value="">' +
-                '<a class="delete icon" title="' + Craft.t('app', 'Remove') + '"></a>');
+            '<a class="delete icon" title="' + Craft.t('app', 'Remove') + '"></a>');
             $element.find('.label').append('<span class="linkFieldLabel" style="padding-left: 15px; font-size:0.8em; font-style:italic">&nbsp;</span>' +
             '<a class="edit icon rename" title="' + Craft.t('app', 'Rename') + '"></a>'
             );
@@ -99,20 +98,17 @@ Craft.TitleElementFieldSelectInput = Craft.BaseElementSelectInput.extend(
               elementId = idField.val();
               return;
             });
+                    
+            var value = JSON.parse(idField.val());
             
-
-
-            var labelField = $element.find('#' + this.settings.id + '_LinkFieldLabel_' + elementId + '');
-            console.log(idField.val(), labelField);
-            if(labelField.length != 0 && labelField.val()!='') {
-              oldName = labelField.val();
+            if(value.linkFieldLabel !== null) {
+              oldName = value.linkFieldLabel;
             }
             var newName = prompt(Craft.t('app', 'Rename'), oldName);
             if (newName !== null) {
-              $element.find('.linkFieldLabel').html(newName);
-              if(labelField.length != 0) {
-                labelField.val(newName);
-              }
+              $element.find('.linkFieldLabel').html(newName.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'));
+              value.linkFieldLabel = newName;
+              idField.val(JSON.stringify(value));
             }
         }
 }

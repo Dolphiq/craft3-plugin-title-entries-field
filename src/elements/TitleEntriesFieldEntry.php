@@ -22,8 +22,10 @@ class TitleEntriesFieldEntry extends Entry {
   public $linkTitle;
 
   public function getLinkFieldLabel () {
-    // var_dump($this);
     return $this->linkTitle;
   }
 
+  public function getTitle () {
+    return ($this->linkTitle != ''?$this->linkTitle:$this->title);
+  }
 }

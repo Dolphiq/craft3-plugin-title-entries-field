@@ -25,16 +25,12 @@ You can use the field as a normal Entries field type but give the end user the p
 {% endfor %}
 ```
 
-### Usage sample to display the Title Entries Field if the field is set or use the title field as backup
+### Usage sample to display the Title Entries Field if the field is set or use the title field as backup (entry.Title)
 ```
 <ul>
 {% for entry in entry.menuLinks %}
   <li><a href="{{ entry.url }}" rel="{{ entry.title }}">
-  {% if entry.linkTitle != '' %}
-    {{ entry.linkTitle }}
-  {% else %}
-    {{ entry.title }}
-  {% endif %}
+    {{ entry.Title }}
   </a>
 {% endfor %}
 </ul>

@@ -18,6 +18,7 @@ use yii\base\Event;
 use dolphiq\titleentriesfield\fields\TitleEntriesField;
 use craft\helpers\Html as HtmlHelper;
 use craft\helpers\ElementHelper;
+use craft\helpers\Json;
 
 
 use craft\base\Object;
@@ -90,9 +91,8 @@ class TitleEntriesFieldPlugin extends \craft\base\Plugin
             }
             $html .= '>';
             if ($context['context'] === 'field' && isset($context['name'])) {
-                $html .= '<input type="hidden" name="' . $context['name'] . '[]" value="' . $element->id . '">';
+                $html .= '<input type="hidden" name="' . $context['name'] . '[]" value="' . HtmlHelper::encode(Json::encode(['id' => $element->id, 'linkFieldLabel' => $element->linkFieldLabel])) . '">';
 
-                $html .= '<input type="hidden" id="' . $context['id'] . '_LinkFieldLabel_' . $element->id . '" name="' . $context['id'] . '_LinkFieldLabel_' . $element->id . '" value="' . $element->linkFieldLabel . '">';
                 $html .= '<a class="delete icon" title="' . Craft::t('app', 'Remove') . '"></a> ';
             }
             if ($element::hasStatuses()) {

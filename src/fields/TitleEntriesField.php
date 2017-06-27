@@ -18,7 +18,7 @@ use craft\elements\Entry;
 use craft\base\Field;
 use dolphiq\titleentriesfield\elements\TitleEntriesFieldEntry;
 use craft\base\FieldInterface;
-
+use craft\helpers\Json;
 
 class TitleEntriesField extends BaseRelationField implements FieldInterface
 {
@@ -122,7 +122,18 @@ class TitleEntriesField extends BaseRelationField implements FieldInterface
 
         return $query;
     }
+    
+    public function getInputHtml($value, ElementInterface $element = null): string
+    {
+        /** @var Element $element */
+        if ($element !== null && $element->hasEagerLoadedElements($this->handle)) {
+            $value = $element->getEagerLoadedElements($this->handle);
+        }
 
+        /** @var ElementQuery|array $value */
+        $variables = $this->inputTemplateVariables($value, $element);
+        return Craft::$app->getView()->renderTemplate($this->inputTemplate, $variables);
+    }
 
     public function updateLinkFieldRelations(BaseRelationField $field, ElementInterface $source, array $targetIds)
     {
@@ -130,9 +141,6 @@ class TitleEntriesField extends BaseRelationField implements FieldInterface
         if (!is_array($targetIds)) {
             $targetIds = [];
         }
-
-        // Prevent duplicate target IDs.
-        $targetIds = array_unique($targetIds);
 
         $transaction = Craft::$app->getDb()->beginTransaction();
 
@@ -168,19 +176,16 @@ class TitleEntriesField extends BaseRelationField implements FieldInterface
                     $sourceSiteId = null;
                 }
 
-                foreach ($targetIds as $sortOrder => $targetId) {
-                    $newLinkFieldLabel = NULL;
-
-                    //var_dump(Craft::$app->request());
-
-                    $labelField =  $this->handle . '_LinkFieldLabel_' . $targetId;
-
-                    $fieldsArray = $_REQUEST[$source->getFieldParamNamespace()];
-
-                    if($fieldsArray && isset($fieldsArray[$labelField]) && $fieldsArray[$labelField]!='') {
-                        $newLinkFieldLabel = $fieldsArray[$labelField];
+                foreach ($targetIds as $sortOrder => $targetElement) {
+                    if (is_string($targetElement)) {
+                      $targetElement = Json::decode($targetElement);
                     }
-
+                    
+                    $targetId=$targetElement['id'];
+                    $newLinkFieldLabel = NULL;
+                    if(isset($targetElement['linkFieldLabel'])) {
+                      $newLinkFieldLabel = $targetElement['linkFieldLabel'];
+                    }
 
                     $values[] = [
                         $field->id,
@@ -201,8 +206,6 @@ class TitleEntriesField extends BaseRelationField implements FieldInterface
                     'sortOrder'
                 ];
 
-               // var_dump($values);
-               // die();
                 Craft::$app->getDb()->createCommand()
                     ->batchInsert('{{%relations}}', $columns, $values)
                     ->execute();
@@ -232,7 +235,6 @@ class TitleEntriesField extends BaseRelationField implements FieldInterface
         }
 
         /** @var int|int[]|false|null $targetIds */
-        //Craft::$app->getRelations()->saveRelations($this, $element, $targetIds);
         $this->updateLinkFieldRelations($this, $element, $targetIds);
 
         Field::afterElementSave($element, $isNew);
