@@ -1,4 +1,10 @@
 # Changelog
+## 1.0.3 - 2017-12-13
+
+### Changed
+- Changed the component description
+- New icon
+- Documentation updated
 
 ## 1.0.2 - 2017-06-27
 - Fixes issues with the field type when used in Matrix fields

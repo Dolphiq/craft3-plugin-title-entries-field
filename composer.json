@@ -1,8 +1,8 @@
 {
     "name": "dolphiq/titleentriesfield",
-    "description": "Craft plugin that provides a new field type that works like an Entries field type but offers users an easy way to set a different title for the relation than the related page title.",
+    "description": "Offers users a field type with an easy way to set a different title for the relation than the related page title. Useful in menus, submenus or related lists if you are linking to other content but want to use shorter or different titles in the lists.",
     "type": "craft-plugin",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "keywords": [
         "craft",
         "cms",
@@ -10,6 +10,10 @@
         "craft-plugin",
         "link",
         "linkfield",
+        "menu",
+        "entry",
+        "item",
+        "link",
         "craft3"
     ],
     "license": "MIT",
@@ -21,7 +25,7 @@
         }
     ],
     "require": {
-        "craftcms/cms": "~3.0.0-beta.1"
+        "craftcms/cms": "^3.0.0-RC1"
     },
     "autoload": {
         "psr-4": {
@@ -34,7 +38,7 @@
         "schemaVersion": "1.0.0",
         "developer": "Dolphiq",
         "developerUrl": "https://dolphiq.nl/",
-        "description": "Craft plugin that provides a new field type that works like an Entries field type but offers users an easy way to set a different title for the relation than the related page title.",
+        "description": "Offers users a field type with an easy way to set a different title for the relation than the related page title. Useful in menus, submenus or related lists if you are linking to other content but want to use shorter or different titles in the lists.",
         "hasCpSettings": false,
         "hasCpSection": false,
         "documentationUrl": "https://github.com/Dolphiq/craft3-plugin-title-entries-field/blob/master/README.md",
