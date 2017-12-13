@@ -1,4 +1,9 @@
 # Changelog
+## 1.0.4 - 2017-12-13
+
+### Added
+- Now it it possible to select the current item as a related item for use in (sub) menu's
+
 ## 1.0.3 - 2017-12-13
 
 ### Changed
