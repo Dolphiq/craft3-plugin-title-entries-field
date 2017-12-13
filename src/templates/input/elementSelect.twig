@@ -110,7 +110,16 @@ Craft.TitleElementFieldSelectInput = Craft.BaseElementSelectInput.extend(
               value.linkFieldLabel = newName;
               idField.val(JSON.stringify(value));
             }
-        }
+        },
+        getDisabledElementIds: function() {
+            var ids = this.getSelectedElementIds();
+
+            if (this.settings.sourceElementId) {
+                // ids.push(this.settings.sourceElementId);
+            }
+
+            return ids;
+        },
 }
 );
 
