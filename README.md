@@ -14,6 +14,9 @@ To install the Title Entries Field type, follow these steps:
 
 Title Entries Field plugin works on Craft 3.x.
 
+### Example of the Title Entries Field in action
+![Screenshot](resources/screenshots/screenshot1.png)
+
 ## Using the Title Entries Field
 
 You can use the field as a normal Entries field type but give the end user the possibility to change te label for each relation/link.

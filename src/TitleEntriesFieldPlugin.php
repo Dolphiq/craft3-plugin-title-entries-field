@@ -50,6 +50,8 @@ class TitleEntriesFieldPlugin extends \craft\base\Plugin
 
         parent::init();
 
+       // var_dump( Craft::$app->getFields());
+
         Craft::$app->getView()->hook('cp.elements.titleElementsFieldElement', function (&$context) {
             if (! isset($context['element'])) {
                 return null;
