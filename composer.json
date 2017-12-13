@@ -2,7 +2,7 @@
     "name": "dolphiq/titleentriesfield",
     "description": "Offers users a field type with an easy way to set a different title for the relation than the related page title. Useful in menus, submenus or related lists if you are linking to other content but want to use shorter or different titles in the lists.",
     "type": "craft-plugin",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "keywords": [
         "craft",
         "cms",
