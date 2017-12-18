@@ -48,6 +48,16 @@ class TitleEntriesField extends BaseRelationField implements FieldInterface
     /**
      * @inheritdoc
      */
+    public function isEmpty($value): bool
+    {
+        /** @var ElementQueryInterface $value */
+        // return $value->count() === 0;
+        
+        return false;
+    }
+    /**
+     * @inheritdoc
+     */
     public static function defaultSelectionLabel(): string
     {
         return Craft::t('app', 'Add an entry');
@@ -137,9 +147,11 @@ class TitleEntriesField extends BaseRelationField implements FieldInterface
 
     public function updateLinkFieldRelations(BaseRelationField $field, ElementInterface $source, array $targetIds)
     {
+
         /** @var Element $source */
         if (!is_array($targetIds)) {
             $targetIds = [];
+
         }
 
         $transaction = Craft::$app->getDb()->beginTransaction();
@@ -177,16 +189,21 @@ class TitleEntriesField extends BaseRelationField implements FieldInterface
                 }
 
                 foreach ($targetIds as $sortOrder => $targetElement) {
-                    if (is_string($targetElement)) {
-                      $targetElement = Json::decode($targetElement);
-                    }
-                    
-                    $targetId=$targetElement['id'];
-                    $newLinkFieldLabel = NULL;
-                    if(isset($targetElement['linkFieldLabel'])) {
-                      $newLinkFieldLabel = $targetElement['linkFieldLabel'];
-                    }
 
+                    if (is_numeric($targetElement)) {
+                        $targetId = $targetElement;
+                        $newLinkFieldLabel= NULL;
+                    } else {
+                        if (is_string($targetElement)) {
+                            $targetElement = Json::decode($targetElement);
+                        }
+
+                        $targetId = $targetElement['id'];
+                        $newLinkFieldLabel = NULL;
+                        if (isset($targetElement['linkFieldLabel'])) {
+                            $newLinkFieldLabel = $targetElement['linkFieldLabel'];
+                        }
+                    }
                     $values[] = [
                         $field->id,
                         $source->id,
