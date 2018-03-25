@@ -21,8 +21,6 @@ use craft\helpers\ElementHelper;
 use craft\helpers\Json;
 
 
-use craft\base\Object;
-
 /**
  * LinkFieldPlugin class.
  */

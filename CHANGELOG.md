@@ -1,4 +1,10 @@
 # Changelog
+
+## 1.0.6 - 2018-03-25
+
+### Fixed
+- Fixed a bug in PHP 7.2 including the common class name Object
+
 ## 1.0.5 - 2017-12-18
 - Quick fix, working on a long-term fix!
 - Fixes issues with the field in Craft RC2
