@@ -52,7 +52,7 @@ class TitleEntriesField extends BaseRelationField implements FieldInterface
     {
         /** @var ElementQueryInterface $value */
         // return $value->count() === 0;
-        
+
         return false;
     }
     /**
@@ -77,7 +77,7 @@ class TitleEntriesField extends BaseRelationField implements FieldInterface
         if ($value instanceof ElementQueryInterface) {
             return $value;
         }
-
+        // return false;var_dump($value);
         /** @var Element|null $element */
         /** @var Element $class */
         $class = static::elementType();
@@ -85,12 +85,30 @@ class TitleEntriesField extends BaseRelationField implements FieldInterface
         $query = $class::find()
             ->siteId($this->targetSiteId($element));
 
+
+        if(is_array($value)) {
+            $is_json = false;
+            $new_values = [];
+            foreach ($value as $sortOrder => $targetElement) {
+
+                if (is_string($targetElement) && strpos($targetElement, '{') !== false) {
+                    $targetElement = Json::decode($targetElement);
+                    $new_values[$sortOrder] = $targetElement['id'];
+                    $is_json = true;
+                }
+            }
+            if ($is_json) {
+
+            }
+        }
+
+
         // $value will be an array of element IDs if there was a validation error or we're loading a draft/version.
         if (is_array($value)) {
             $query
                 ->id(array_values(array_filter($value)))
                 ->fixedOrder();
-        } else if ($value !== '' && $element && $element->id) {
+        } else if (($value === NULL || $value !== '') && $element && $element->id) {
 
             $query->innerJoin(
                 '{{%relations}} relations',
