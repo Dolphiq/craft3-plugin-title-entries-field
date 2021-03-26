@@ -1,5 +1,5 @@
 <?php
-  
+
 /**
  * @author    dolphiq
  * @copyright Copyright (c) 2017 dolphiq
@@ -13,6 +13,7 @@ use Craft;
 use craft\base\Element;
 use craft\base\ElementInterface;
 use craft\fields\BaseRelationField;
+use Exception;
 use yii\base\Component;
 
 
@@ -100,7 +101,7 @@ class LinkFieldRelations extends Component
             }
 
             $transaction->commit();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $transaction->rollBack();
 
             throw $e;

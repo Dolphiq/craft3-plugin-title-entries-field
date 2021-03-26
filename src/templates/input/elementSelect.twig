@@ -46,14 +46,14 @@ Craft.TitleElementFieldSelectInput = Craft.BaseElementSelectInput.extend(
             $element.addClass('removable');
 
             var value = JSON.stringify({id: elementInfo.id, linkFieldLabel: null});
-  
+
             $element.prepend('<input type="hidden" name="' + this.settings.name + '[]" value="' + value.replace(/"/g, '&quot;') + '">' +
 
             '<a class="delete icon" title="' + Craft.t('app', 'Remove') + '"></a>');
             $element.find('.label').append('<span class="linkFieldLabel" style="padding-left: 15px; font-size:0.8em; font-style:italic">&nbsp;</span>' +
             '<a class="edit icon rename" title="' + Craft.t('app', 'Rename') + '"></a>'
             );
-           
+
             return $element;
         },
         addElements: function($elements) {
@@ -98,9 +98,9 @@ Craft.TitleElementFieldSelectInput = Craft.BaseElementSelectInput.extend(
               elementId = idField.val();
               return;
             });
-                    
+
             var value = JSON.parse(idField.val());
-            
+
             if(value.linkFieldLabel !== null) {
               oldName = value.linkFieldLabel;
             }

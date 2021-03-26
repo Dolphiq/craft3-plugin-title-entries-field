@@ -11,14 +11,14 @@
 namespace dolphiq\titleentriesfield\fields;
 
 use Craft;
-use craft\fields\BaseRelationField;
 use craft\base\ElementInterface;
-use craft\elements\db\ElementQueryInterface;
-use craft\elements\Entry;
 use craft\base\Field;
-use dolphiq\titleentriesfield\elements\TitleEntriesFieldEntry;
 use craft\base\FieldInterface;
+use craft\elements\db\ElementQueryInterface;
+use craft\fields\BaseRelationField;
 use craft\helpers\Json;
+use dolphiq\titleentriesfield\elements\TitleEntriesFieldEntry;
+use Exception;
 
 class TitleEntriesField extends BaseRelationField implements FieldInterface
 {
@@ -55,6 +55,7 @@ class TitleEntriesField extends BaseRelationField implements FieldInterface
 
         return false;
     }
+
     /**
      * @inheritdoc
      */
@@ -86,7 +87,7 @@ class TitleEntriesField extends BaseRelationField implements FieldInterface
             ->siteId($this->targetSiteId($element));
 
 
-        if(is_array($value)) {
+        if (is_array($value)) {
             $is_json = false;
             $new_values = [];
             foreach ($value as $sortOrder => $targetElement) {
@@ -150,7 +151,7 @@ class TitleEntriesField extends BaseRelationField implements FieldInterface
 
         return $query;
     }
-    
+
     public function getInputHtml($value, ElementInterface $element = null): string
     {
         /** @var Element $element */
@@ -210,7 +211,7 @@ class TitleEntriesField extends BaseRelationField implements FieldInterface
 
                     if (is_numeric($targetElement)) {
                         $targetId = $targetElement;
-                        $newLinkFieldLabel= NULL;
+                        $newLinkFieldLabel = NULL;
                     } else {
                         if (is_string($targetElement)) {
                             $targetElement = Json::decode($targetElement);
@@ -247,7 +248,7 @@ class TitleEntriesField extends BaseRelationField implements FieldInterface
             }
 
             $transaction->commit();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $transaction->rollBack();
 
             throw $e;
@@ -258,7 +259,8 @@ class TitleEntriesField extends BaseRelationField implements FieldInterface
      * @inheritdoc
      */
     public function afterElementSave(ElementInterface $element, bool $isNew)
-        /** @var ElementQuery $value */    {
+        /** @var ElementQuery $value */
+    {
 
         $value = $element->getFieldValue($this->handle);
 

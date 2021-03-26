@@ -12,19 +12,19 @@ namespace dolphiq\titleentriesfield;
 
 use Craft;
 use craft\base\Plugin;
-use craft\services\Fields;
 use craft\events\RegisterComponentTypesEvent;
-use yii\base\Event;
-use dolphiq\titleentriesfield\fields\TitleEntriesField;
-use craft\helpers\Html as HtmlHelper;
 use craft\helpers\ElementHelper;
+use craft\helpers\Html as HtmlHelper;
 use craft\helpers\Json;
+use craft\services\Fields;
+use dolphiq\titleentriesfield\fields\TitleEntriesField;
+use yii\base\Event;
 
 
 /**
  * LinkFieldPlugin class.
  */
-class TitleEntriesFieldPlugin extends \craft\base\Plugin
+class TitleEntriesFieldPlugin extends Plugin
 {
     public static $plugin;
 
@@ -33,7 +33,7 @@ class TitleEntriesFieldPlugin extends \craft\base\Plugin
     // table schema version
     public $schemaVersion = '1.0.0';
 
-    
+
     /**
      * init function.
      *
@@ -48,15 +48,15 @@ class TitleEntriesFieldPlugin extends \craft\base\Plugin
 
         parent::init();
 
-       // var_dump( Craft::$app->getFields());
+        // var_dump( Craft::$app->getFields());
 
         Craft::$app->getView()->hook('cp.elements.titleElementsFieldElement', function (&$context) {
-            if (! isset($context['element'])) {
+            if (!isset($context['element'])) {
                 return null;
             }
-          /** @var Element $element */
-          $element = $context['element'];
-            if (! isset($context['context'])) {
+            /** @var Element $element */
+            $element = $context['element'];
+            if (!isset($context['context'])) {
                 $context['context'] = 'index';
             }
 
@@ -64,17 +64,17 @@ class TitleEntriesFieldPlugin extends \craft\base\Plugin
             $elementSize = 'small';
 
             $htmlAttributes = array_merge(
-            $element->getHtmlAttributes($context['context']),
-            [
-                'class'        => 'element ' . $elementSize,
-                'data-type'    => get_class($element),
-                'data-id'      => $element->id,
-                'data-site-id' => $element->siteId,
-                'data-status'  => $element->getStatus(),
-                'data-label'   => (string)$element,
-                'data-url'     => $element->getUrl(),
-                'data-level'   => $element->level,
-            ]);
+                $element->getHtmlAttributes($context['context']),
+                [
+                    'class' => 'element ' . $elementSize,
+                    'data-type' => get_class($element),
+                    'data-id' => $element->id,
+                    'data-site-id' => $element->siteId,
+                    'data-status' => $element->getStatus(),
+                    'data-label' => (string)$element,
+                    'data-url' => $element->getUrl(),
+                    'data-level' => $element->level,
+                ]);
             if ($context['context'] === 'field') {
                 $htmlAttributes['class'] .= ' removable';
             }
