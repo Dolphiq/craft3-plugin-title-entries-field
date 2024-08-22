@@ -1,5 +1,7 @@
 # Title Entries Field plugin for Craft CMS 3.x
 
+## Currently the project is *DISCONTINUED*. However, feel free to fork it and continue its development!
+
 Craft plugin that provides a new field type that works like an Entries field type but offers users an easy way to set a different title for the relation than the related page title.
 
 This is particularly useful if you are linking to other content but want to use shorter or different titles in the lists e.g. in menus, submenus or related lists.
